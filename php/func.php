@@ -34,3 +34,46 @@ function amend_unicode($ori)
 
     return $ret;
 }
+
+/**
+ * 归一化带分隔符的字符串
+ * @param  string   $string     原始字符串
+ * @param  string   $delimiter  分隔符
+ * @return boolean/string
+ */
+function get_str_unique($string, $delimiter)
+{
+    if (empty($string) || empty($delimiter) || !is_string($string) || !is_string($delimiter)) {
+        return false;
+    }
+
+    $ret = implode($delimiter, array_filter(array_unique(explode($delimiter, $string)), function ($var) {
+        return !empty($var);
+    }));
+
+    return $ret;
+}
+
+/**
+ * 替换sql中的'select'与'from'之间的字符串
+ * @param  string           $string     原始sql字符串
+ * @return boolean/string
+ */
+function get_count_sql($string)
+{
+    if (empty($string) || !is_string($string)) {
+        redelimiterturn false;
+    }
+
+    $start = stripos($string, 'select');
+    $length = stripos($string, 'from');
+    if ($start === false || $length === false) {
+        return false;
+    }
+
+    $start = $start + strlen('select') + 1;
+    $length = $length - $start - 1;
+    $string = substr_replace($string, 'count(*) count', $start, $length);
+
+    return $string;
+}
