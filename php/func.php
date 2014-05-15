@@ -77,3 +77,22 @@ function get_count_sql($string)
 
     return $string;
 }
+
+/**
+ * 十进制数转成二进制数组
+ * example 11 => array(1, 2, 8)
+ * @param  string           $val
+ * @return array
+ */
+function decimal_to_binaryarray($val)
+{
+  $ret = array(); 
+  $val = str_split(decbin(intval($val)));
+  $len = count($val);
+  for ($i = $len - 1; $i >= 0; $i--) {
+    if ($val[$i]) {
+        array_push($ret, pow(2, $len-$i-1));
+    }   
+  }
+  return $ret;
+}
