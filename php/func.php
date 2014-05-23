@@ -96,3 +96,20 @@ function decimal_to_binaryarray($val)
   }
   return $ret;
 }
+
+function iconv_util($in_charset, $out_charset, $src)
+{
+    if (empty($in_charset) || empty($out_charset)) {
+        return false;
+    }
+
+    if (is_array($src)) {
+        foreach ($src as $k=>$v) {
+            $src[$k] = iconv($in_charset, $out_charset, $v);
+        }
+    } else if (is_string($src)){
+        $src = iconv($in_charset, $out_charset, $src);
+    }
+
+    return $src;
+}
